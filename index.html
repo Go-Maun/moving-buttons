@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <p>How many buttons to create? A number between 5 and 100</p>
+    <input id="text" type="text">
+    <input id="go" type="button" value="go">
+    <p id="answer"></p>
+
+    <script>
+
+        let height = window.innerHeight;
+        let width = window.innerWidth;
+        let arr = [];
+
+
+        function buttons(x, y, colour) {
+
+            this.x = x;
+            this.y = y;
+            this.colour = colour;
+            this.btn = document.createElement("BUTTON");
+            this.btn.style = "height: 5em; width: 10em; background-color: " + colour;
+            this.btn.style.top = y + "px";
+            this.btn.style.left = x + "px";
+            this.btn.style.position = "fixed";
+            document.body.appendChild(this.btn);
+
+        }
+
+        function moveButtons() {
+            for (let i = 0; i < arr.length; i++) {
+                let x = Math.floor(Math.random() * (width * (7 / 9)));
+                let y = Math.floor(Math.random() * (height * (7 / 9)));
+                arr[i].btn.style.top = y + "px";
+                arr[i].btn.style.left = x + "px";
+            }
+        }
+
+        function createButtons(number) {
+            for (let i = 0; i < number; i++) {
+                let x = Math.floor(Math.random() * (width * (7 / 9)));
+                let y = Math.floor(Math.random() * (height * (7 / 9)));
+                let colour = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
+                let btn = new buttons(x, y, colour);
+                arr.push(btn);
+            }
+        }
+
+        function validate() {
+            let number = parseInt(document.getElementById("text").value);
+            if (5 <= number) {
+                if (number <= 100) {
+                    document.getElementById("answer").innerHTML = "OK"
+                    createButtons(number)
+                    document.getElementById("go").style.visibility = "hidden"
+                }
+                else {
+                    document.getElementById("answer").innerHTML = "A Number Between 5 and 100"
+                }
+            } else {
+                document.getElementById("answer").innerHTML = "A Number Between 5 and 100"
+            }
+            
+        }
+
+
+        document.getElementById("go").onclick = validate
+        setInterval(function () { moveButtons() }, 2000)
+
+
+    </script>
+
+</body>
+
+</html>
